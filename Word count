@@ -8,7 +8,11 @@ public class Main {
   
   public static void wordCount(String inputFileName, String outputFileName) {
     Scanner scan = new Scanner(System.in);
-    String word = scan.nextLine();
-    String.split(word);
-    String.toLowerCase(word);
-    int count = 
+    File text = new File(inputFileName);
+    
+    for(int i = 0; i > inputFileName.length(); i++) {
+      String word = scan.nextLine();
+      String.split(word);
+      String.toLowerCase(word);
+      int count = 0;
+      if
