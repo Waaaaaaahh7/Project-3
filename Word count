@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
   
   public static void wordCount(String inputFileName, String outputFileName) {
-    for(int i = 0; i 
     Scanner scan = new Scanner(System.in);
     String word = scan.nextLine();
+    String.split(word);
+    String.toLowerCase(word);
