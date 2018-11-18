@@ -1,0 +1,51 @@
+# Project-3
+Hash Table
+
+import java.util.ArrayList; 
+import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
+
+// A node of the hashmap chains
+public class HashNode 
+{ 
+  //The key is a string of the words from the text file
+    String key; 
+    //This gives the count of the word
+    int value; 
+  
+    //Next node in the hash table
+    HashNode next; 
+  
+    //Constructor that sets the key in the hash node with avalue.
+    public HashNode(String key, int value) 
+    { 
+        this.key = key; 
+        this.value = value; 
+    } 
+    
+    public String getKey(){
+      return key;
+    }
+} 
+  
+
+
+      
+      
+      
+      
+        
+        
+      
+      
+      
+      
+      
+     
+      
+      
+      
+    
+
