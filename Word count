@@ -1,0 +1,12 @@
+//Kareem Akabashorun
+
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public class Main {
+  
+  public static void wordCount(String inputFileName, String outputFileName) {
+    for(int i = 0; i 
+    Scanner scan = new Scanner(System.in);
+    String word = scan.nextLine();
