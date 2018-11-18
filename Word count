@@ -11,3 +11,4 @@ public class Main {
     String word = scan.nextLine();
     String.split(word);
     String.toLowerCase(word);
+    int count = 
