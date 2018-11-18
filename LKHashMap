@@ -1,0 +1,218 @@
+# Project-3
+import java.util.Scanner;
+import java.util.Scanner.*;
+import java.io.FileReader;
+import java.io.FileReader.*;
+import java.io.BufferedReader.*;
+import java.io.*;
+import static java.lang.System.*;
+public class Map 
+{ 
+    // array that stores the number of certain of number of linked lists.
+    private HashNode[] array;
+    
+    // The capacity of the array.
+    private int numNodes; 
+  
+    //The total number of elements in the array. (The different number of words in our case).
+    private int size; 
+  
+    // Constructor that initializes the array size and sets everything in it to null.
+    public Map() 
+    { 
+        numNodes = 10; 
+        array = new HashNode[numNodes]; 
+        size = 0; 
+  
+        // Create empty chains 
+        for (int i = 0; i < numNodes; i++) {
+            array[i] = (null);
+        }
+    } 
+  
+    public int getSize() {
+      return size; 
+    }
+    
+    public int getNumNodes(){
+      return numNodes;
+    }
+    
+    public boolean isEmpty() { 
+      
+      if(this.getSize() == 0){
+        return true;
+      }
+      
+      return false;
+    } 
+  
+    // This implements hash function to find index 
+    // for a key 
+    private int getIndex(String key) 
+    { 
+        int hashCode = key.hashCode(); 
+        int index = hashCode % numNodes; 
+        return index; 
+    } 
+  
+    // Method to remove a given key 
+    public int remove(String key) 
+    { 
+        // Apply hash function to find index for given key 
+        int index = getIndex(key); 
+  
+        // Get head of chain 
+        HashNode head = array[index]; 
+  
+        // Search for key in its chain 
+        HashNode prev = null;
+        while (head != null) 
+        { 
+            // If Key found 
+            if (head.key.equals(key)) 
+                break; 
+  
+            // Else keep moving in chain 
+            prev = head; 
+            head = head.next; 
+        } 
+  
+        // If key was not there 
+        if (head == null) 
+            return -1; 
+  
+        // Reduce size 
+        size--; 
+  
+        // Remove key 
+        if (prev != null) 
+            prev.next = head.next; 
+        else
+            array[index] = head.next; 
+  
+        return head.value; 
+    } 
+  
+    // Returns value for a key 
+    public int get(String key) 
+    { 
+        // Find head of chain for given key 
+        int index = getIndex(key); 
+        HashNode head = array[index]; 
+  
+        // Search key in chain 
+        while (head != null) 
+        { 
+            if (head.key.equals(key)) 
+                return head.value; 
+            head = head.next; 
+        } 
+  
+        // If key not found 
+        return -1; 
+    } 
+  
+    // Adds a key value pair to hash 
+    public void add(String key, int value) 
+    { 
+        // Find head of chain for given key 
+        int index = getIndex(key); 
+        
+        HashNode head = array[index]; 
+  
+        // Check if key is already present 
+        while (head != null) 
+        { 
+            if (head.key.equals(key)) 
+            { 
+                head.value = value; 
+                return; 
+            } 
+            head = head.next; 
+        } 
+  
+        // Insert key in chain 
+        size++; 
+        head = array[index]; 
+        HashNode newNode = new HashNode(key, value); 
+        newNode.next = head; 
+        array[index] = newNode; 
+  
+        // If load factor goes beyond threshold, then 
+        // double hash table size 
+        /*if ((1.0*size)/numBuckets >= 0.7) 
+        { 
+            
+            ArrayList<HashNode<K, V>> temp = bucketArray; 
+            bucketArray = new ArrayList<>(); 
+            numBuckets = 2 * numBuckets; 
+            size = 0; 
+            for (int i = 0; i < numBuckets; i++) 
+                bucketArray.add(null); 
+  
+            for (HashNode<K, V> headNode : temp) 
+            { 
+                while (headNode != null) 
+                { 
+                    add(headNode.key, headNode.value); 
+                    headNode = headNode.next; 
+                } 
+            } 
+        }*/
+        
+    } 
+  
+    
+    public void wordcount (String inputFile, String outputFile){
+      int val;
+      Map map = new Map();
+      try{
+      //Opens a file reader, to open the output file we're reading.
+      FileReader read = new FileReader(inputFile);
+      
+      //Class that acually reads the inputFile.
+      BufferedReader buffer = new BufferedReader(read);
+      
+      //Opens a file writer, to open the output file we're writing on.
+      FileWriter file = new FileWriter(outputFile);
+      
+      //Class that acually prints onto the ouput file itself.
+      PrintWriter print = new PrintWriter(file);
+      
+      String word;
+      
+      //Adds the words to the hash table..
+      while ((word = buffer.readLine()) != null){
+        if(map.get(word) == -1){
+           map.add(word,1);
+          }
+        else{
+          val = map.get(word) + 1;
+          map.add(word,val);   
+        }
+      }
+
+      
+      //Iterate through hashmap to print the words and count 
+      for(int i = 0; i < map.getNumNodes(); i++){
+        HashNode head = array[i];
+          while (head != null) 
+        { 
+            print.println("(" + head.getKey() + ", " + map.get(head.getKey()) + ")");
+            head = head.next; 
+        }
+      }
+      
+       print.close();
+        
+      }
+      catch (IOException e){
+        System.out.println("Something went wrong!");
+      }
+        
+        
+        
+        
+      }
+}
