@@ -1,4 +1,4 @@
-# Project-3
+
 import java.util.Scanner;
 import java.util.Scanner.*;
 import java.io.FileReader;
@@ -20,7 +20,7 @@ public class Map
     // Constructor that initializes the array size and sets everything in it to null.
     public Map() 
     { 
-        numNodes = 10; 
+        numNodes = 30; 
         array = new HashNode[numNodes]; 
         size = 0; 
   
@@ -52,7 +52,7 @@ public class Map
     private int getIndex(String key) 
     { 
         int hashCode = key.hashCode(); 
-        int index = hashCode % numNodes; 
+        int index = Math.abs(key.hashCode()) % numNodes;
         return index; 
     } 
   
@@ -137,21 +137,21 @@ public class Map
         head = array[index]; 
         HashNode newNode = new HashNode(key, value); 
         newNode.next = head; 
-        array[index] = newNode; 
+        array[0] = newNode; 
   
         // If load factor goes beyond threshold, then 
         // double hash table size 
-        /*if ((1.0*size)/numBuckets >= 0.7) 
+        if ((1.0*size)/numNodes >= 0.75) 
         { 
             
-            ArrayList<HashNode<K, V>> temp = bucketArray; 
-            bucketArray = new ArrayList<>(); 
-            numBuckets = 2 * numBuckets; 
+            HashNode[] temp = array; 
+            numNodes = 2 * numNodes; 
+            array = new HashNode[numNodes*2]; 
             size = 0; 
-            for (int i = 0; i < numBuckets; i++) 
-                bucketArray.add(null); 
+            for (int i = 0; i < numNodes; i++) 
+                array[i] = null; 
   
-            for (HashNode<K, V> headNode : temp) 
+            for (HashNode headNode : temp) 
             { 
                 while (headNode != null) 
                 { 
@@ -159,18 +159,17 @@ public class Map
                     headNode = headNode.next; 
                 } 
             } 
-        }*/
+        }
         
     } 
   
     
-    public void wordcount (String inputFile, String outputFile){
+    public void wordCount (String inputFile, String outputFile){
       int val;
       Map map = new Map();
       try{
       //Opens a file reader, to open the output file we're reading.
       FileReader read = new FileReader(inputFile);
-      
       //Class that acually reads the inputFile.
       BufferedReader buffer = new BufferedReader(read);
       
@@ -179,6 +178,9 @@ public class Map
       
       //Class that acually prints onto the ouput file itself.
       PrintWriter print = new PrintWriter(file);
+      
+      FileReader readSolution = new FileReader(outputFile);
+      BufferedReader bufferSolution = new BufferedReader(readSolution);
       
       String word;
       
@@ -193,7 +195,6 @@ public class Map
         }
       }
 
-      
       //Iterate through hashmap to print the words and count 
       for(int i = 0; i < map.getNumNodes(); i++){
         HashNode head = array[i];
@@ -204,7 +205,16 @@ public class Map
         }
       }
       
+      while ((word = bufferSolution.readLine()) != null){
+        System.out.println(word);
+        
+      }
+      
+      
+      
        print.close();
+       buffer.close();
+       bufferSolution.close();
         
       }
       catch (IOException e){
